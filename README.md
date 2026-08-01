@@ -1,24 +1,23 @@
+# Internal Knowledge Assistant
 
-# Mini-Project — IronStore Enterprise AI Assistant
+RAG-based assistant that answers employee questions from internal company documents (HR, Finance, IT, Legal, Sales, Deliveries, Customer Support, product catalog).
 
-Build an AI-powered enterprise assistant that enables employees to access internal company knowledge through natural language.
+## Stack
+LangChain + OpenAI (gpt-4o-mini, text-embedding-3-small) + Chroma vector store.
 
-![](./project-intro.png)
+## Setup
+```bash
+python -m venv venv
+venv\Scripts\pip install -r requirements.txt
+copy .env.example .env   # add your OPENAI_API_KEY
+```
 
+## Usage
+```bash
+venv\Scripts\python -m src.ingest.build_index   # build the index (run once, or after doc changes)
+venv\Scripts\python -m src.assistant.cli        # chat with the assistant
+```
 
-## Your task:
-
-- Build an AI assistant that helps employees quickly access internal company knowledge through a conversational interface.
-- The assistant should answer questions, explain internal procedures, and assist with everyday work tasks by using the organization's proprietary information. It should provide clear, accurate, and trustworthy responses, helping employees find information efficiently while acknowledging when it cannot confidently answer a question.
-- The goal is to create a practical internal assistant that improves productivity, reduces time spent searching for information, and provides a consistent experience across the organization.
-
-
-## The data
-
-Your team has collected a set of internal company documents from different departments.
-
-These documents are available in the `documents` directory. Explore the available data and determine how it can be used to build an assistant capable of answering employees' questions accurately and reliably.
-
-The dataset has been synthetically generated, as this type of internal company information is typically not publicly available. However, it has been designed to be as realistic as possible and to resemble the kinds of documents you would encounter in a real organization.
-
-Keep in mind that, as with many real-world document collections, the data may contain inconsistencies, duplicated content, or outdated information. Your solution should handle these situations as effectively as possible.
+## Notes
+- `documents/` isn't tracked in git — add your own PDFs before ingesting.
+- Answers are grounded only in retrieved document context; the assistant says so when it can't find an answer.
